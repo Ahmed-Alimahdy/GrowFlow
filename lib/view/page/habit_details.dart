@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_tracker/model/habit_model.dart';
 import 'package:habit_tracker/view/component/color_item.dart';
-import 'package:habit_tracker/view/component/insert_habit.dart';
+import 'package:habit_tracker/view/component/insert_habit_form.dart';
+import 'package:habit_tracker/view/page/home_screen.dart';
 
 import '../../controller/habit_cubit.dart';
 
 class HabitDetails extends StatelessWidget {
   Habit habit;
+  Habit origHabit=Habit(description: '', title: '');
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  HabitDetails({super.key, required this.habit})
+  {
+    origHabit.copyWith(habit);
+  }
 
-  HabitDetails({super.key, required this.habit});
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +24,23 @@ class HabitDetails extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(onPressed: () {
+              if(formKey.currentState!.validate()) {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+              }
+              else
+                {
+                  habit.copyWith(origHabit);
+                  context.read<HabitCubit>().updateHabit(habit);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+                }
+            }, icon: Icon(Icons.arrow_back)),
             title: Text('Habit Details'),
             actions: [
               IconButton(
                 onPressed: () {
                   context.read<HabitCubit>().deleteHabit(habit);
-                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
                 },
                 icon: Icon(Icons.delete),
               ),
@@ -167,7 +184,7 @@ class HabitDetails extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 60),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -176,7 +193,11 @@ class HabitDetails extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-                InsertHabit(habit: habit)
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: InsertHabit(habit: habit,isUpdate: true,formKey: formKey,),
+                  ),
+                )
               ],
             ),
           ),

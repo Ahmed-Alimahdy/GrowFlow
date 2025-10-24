@@ -9,13 +9,14 @@ part 'habit_state.dart';
 class HabitCubit extends Cubit<HabitState> {
   List<Habit> allHabits =[];
   List<Habit> todayHabit=[];
+  DateTime date = DateTime.now();
   HabitCubit() : super(HabitInitial());
   void loadHabits() async{
     try {
       emit(HabitLoading());
-      await Sqflite_service.open('habit5.db');
+      await Sqflite_service.open('habit12.db');
       allHabits = await Sqflite_service().getHabits() ?? [];
-      todayHabit = [];
+      todayHabit =  await filterHabits();
       emit(HabitLoaded(allHabits, todayHabit));
     }
     catch(e)
@@ -59,6 +60,44 @@ class HabitCubit extends Cubit<HabitState> {
     catch(e) {
       emit(HabitError(e.toString()));
     }
+  }
+  Future<List<Habit>> filterHabits() async {
+    try {
+      todayHabit = allHabits.where((element) {
+        if(element.interval == "Every day"){
+          return true;
+        }
+        if(element.interval == 'Every week')
+        {
+          if(element.date.weekday == date.weekday)
+          {
+            return true;
+          }
+        }
+        if(element.interval == 'Every month')
+        {
+          if(element.date.day == date.day)
+          {
+            return true;
+          }
+        }
+        return false;
+      })
+          .toList();
+      emit(HabitLoaded(allHabits, todayHabit));
+      return todayHabit;
+    }
+    catch(e) {
+      emit(HabitError(e.toString()));
+    }
+    return [];
+  }
+  Future<void> updateDate(DateTime date)
+  async {
+    this.date = date;
+    todayHabit = await filterHabits();
+    loadHabits();
+    emit(HabitLoaded(allHabits, todayHabit));
   }
 }
 

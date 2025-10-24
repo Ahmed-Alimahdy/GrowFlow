@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
-class Habit{
+
+class Habit {
   int? id;
   String? title;
   String? description;
-  bool isCompleted=false;
-  IconData icon = Icons.question_mark;
+  bool isCompleted = false;
+  IconData icon;
+  DateTime date = DateTime.now();
   Color? color;
   String? interval;
 
-  Habit({IconData? icon, required String this.description,required String this.title,this.isCompleted=false,Color this.color=Colors.grey,this.id,this.interval}){
-    this.icon = icon ?? Icons.question_mark;
+  Habit({
+    this.icon = Icons.question_mark,
+    required this.description,
+    required this.title,
+    this.isCompleted = false,
+    this.color,
+    this.id,
+    this.interval,
+    DateTime? date,
+  }) : date = date ?? DateTime.now();
+
+  void copyWith(Habit habit) {
+    description = description!.isEmpty ? habit.description : description;
+    title = title!.isEmpty ? habit.title : title;
   }
-
-
 
   Map<String, dynamic> toMap() {
     return {
@@ -22,7 +34,8 @@ class Habit{
       'isCompleted': isCompleted ? 1 : 0,
       'title': title,
       'color': color?.value,
-      'icon': icon.codePoint
+      'icon': icon.codePoint,
+      'creationDate': date.toString(),
     };
   }
 

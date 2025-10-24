@@ -10,6 +10,8 @@ class Sqflite_service {
  static final String columnInterval = 'interval';
 static final String columnColor = 'color';
 static final String columnIcon = 'icon';
+static final String columnDate = 'creationDate';
+
 
  static Database? db;
 
@@ -26,7 +28,9 @@ create table $tableHabit (
   $columnTitle text not null,
   $columnDone integer not null,
   $columnColor integer not null,
-  $columnIcon integer not null)
+  $columnIcon integer not null,
+  $columnDate text not null
+  )
 ''');
       },
     );
@@ -39,13 +43,12 @@ create table $tableHabit (
   Future<List<Habit>?> getHabits() async {
     List<Map<String, dynamic>> maps = await db!.query(
       tableHabit,
-      columns: [columnId, columnDone, columnTitle,columnDescription,columnInterval,columnColor,columnIcon],
+      columns: [columnId, columnDone, columnTitle,columnDescription,columnInterval,columnColor,columnIcon,columnDate],
     );
    List<Habit> habitList = maps.map((e) => Habit.fromMap(e)).toList();
    if(habitList != null) {
      return habitList;
    }
-
    return null;
   }
 
