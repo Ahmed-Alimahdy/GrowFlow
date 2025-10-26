@@ -39,7 +39,6 @@ lib/
 ```
 🖼️ Screenshots
 
-Example Markdown to add images:
 <img width="325" height="726" alt="Screenshot 2025-10-26 231549" src="https://github.com/user-attachments/assets/07a38d84-a468-4bf5-8636-fd332e51d35f" />
 <img width="337" height="725" alt="Screenshot 2025-10-26 231513" src="https://github.com/user-attachments/assets/d41b42c5-32a3-4be4-95c6-db62acb7a8cf" />
 <img width="338" height="728" alt="Screenshot 2025-10-26 231526" src="https://github.com/user-attachments/assets/54e00a3a-a5ab-467e-b988-2067e939c1d1" />
