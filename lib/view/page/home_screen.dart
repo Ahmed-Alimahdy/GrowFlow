@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_tracker/controller/habit_cubit.dart';
+import 'package:habit_tracker/view/component/dateSlider.dart';
 import 'package:habit_tracker/view/page/add_habit_screen.dart';
 import 'habit_details.dart';
 
@@ -68,24 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Transform.scale(
-                      scale: 1.2,
-                      child: CalendarSlider(
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now().subtract(Duration(days: 140)),
-                        lastDate: DateTime.now().add(Duration(days: 100)),
-                        onDateSelected: (date) {
-                           context.read<HabitCubit>().updateDate(date);
-                        },
-                        fullCalendar: false,
-                        selectedDayPosition: SelectedDayPosition.center,
-                        selectedTileBackgroundColor:  Color.fromARGB(255, 77, 84, 222),
-                      ),
-                    ),
-                  ),
+                  DateSlider(),
                   if (context.read<HabitCubit>().todayHabit.isEmpty)
                     Column(mainAxisAlignment: MainAxisAlignment.center,children: [Icon(Icons.add, size: 100,color: Colors.grey,),Text('There is not habits yet!',style: TextStyle(color: Colors.grey,fontSize: 16),)]),
                   if(context.read<HabitCubit>().todayHabit.isNotEmpty)
@@ -229,9 +213,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
             onTap: (value) {
               if (value == 1) {
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => AddHabitScreen()),
                 );
+
               }
             },
 

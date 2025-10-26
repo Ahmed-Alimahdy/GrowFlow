@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:habit_tracker/model/habit_model.dart';
 import 'package:meta/meta.dart';
 
 import '../services/sqflite_services.dart';
+import '../view/component/dateSlider.dart';
 
 part 'habit_state.dart';
 
@@ -99,5 +101,7 @@ class HabitCubit extends Cubit<HabitState> {
     loadHabits();
     emit(HabitLoaded(allHabits, todayHabit));
   }
+
+
 }
 

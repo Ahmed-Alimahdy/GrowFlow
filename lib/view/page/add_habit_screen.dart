@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_tracker/controller/habit_cubit.dart';
 import 'package:habit_tracker/model/habit_model.dart';
+import 'package:habit_tracker/view/page/home_screen.dart';
 
 import '../component/insert_habit_form.dart';
 
@@ -24,6 +25,9 @@ class AddHabitScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(onPressed: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen(),));
+            }, icon: Icon(Icons.arrow_back)),
             title: Text('Let\'s start a new habit'),
             centerTitle: true,
             actions: [
