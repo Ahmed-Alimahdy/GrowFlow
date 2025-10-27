@@ -11,6 +11,7 @@ part 'habit_state.dart';
 class HabitCubit extends Cubit<HabitState> {
   List<Habit> allHabits =[];
   List<Habit> todayHabit=[];
+  bool reinit=false;
   DateTime date = DateTime.now();
   HabitCubit() : super(HabitInitial());
   void loadHabits() async{

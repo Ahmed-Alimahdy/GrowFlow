@@ -1,4 +1,3 @@
-import 'package:calendar_slider/calendar_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   void initState() {
     context.read<HabitCubit>().loadHabits();
@@ -68,6 +68,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  if(context.read<HabitCubit>().reinit)
+                    Align(alignment: Alignment.centerRight,child: ElevatedButton(onPressed: (){
+                      context.read<HabitCubit>().updateDate(DateTime.now());
+                      context.read<HabitCubit>().reinit = false;
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen(),));
+                    }, child: Text('return to today'))),
+                  if(context.read<HabitCubit>().reinit==0)
                   const SizedBox(height: 20),
                   DateSlider(),
                   if (context.read<HabitCubit>().todayHabit.isEmpty)

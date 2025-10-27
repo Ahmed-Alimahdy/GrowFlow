@@ -17,6 +17,17 @@ class DateSlider extends StatelessWidget {
           firstDate: DateTime.now().subtract(Duration(days: 140)),
           lastDate: DateTime.now().add(Duration(days: 100)),
           onDateSelected: (date) {
+            if(date.day != DateTime.now().day) {
+              context
+                  .read<HabitCubit>()
+                  .reinit = true;
+            }
+            else
+              {
+                context
+                    .read<HabitCubit>()
+                    .reinit = false;
+              }
             context.read<HabitCubit>().updateDate(date);
           },
           fullCalendar: false,

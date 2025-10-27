@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_tracker/model/habit_model.dart';
-import 'package:habit_tracker/view/component/color_item.dart';
 import 'package:habit_tracker/view/component/insert_habit_form.dart';
 import 'package:habit_tracker/view/page/home_screen.dart';
 
@@ -130,14 +129,14 @@ class HabitDetails extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'ID',
+                                    'Created at',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
                                     ),
                                   ),
                                   Text(
-                                    '${habit.id}',
+                                    '${habit.date.day}/${habit.date.month}/${habit.date.year}',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,

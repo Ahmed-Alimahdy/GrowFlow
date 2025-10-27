@@ -14,7 +14,7 @@ class Habit {
     this.icon = Icons.question_mark,
     required this.description,
     required this.title,
-    this.isCompleted = false,
+    this.isCompleted =false,
     this.color,
     this.id,
     this.interval,
@@ -48,6 +48,7 @@ class Habit {
       title: map['title'] as String,
       color: Color(map['color']),
       icon: IconData(map['icon'], fontFamily: 'MaterialIcons'),
+      date: DateTime.parse(map['creationDate']),
     );
   }
 }
